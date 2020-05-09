@@ -5,6 +5,10 @@ function loadProtoFile(file) {
   return protobuf.loadSync(path.join(__dirname, `protos/${file}.proto`));
 }
 
+/**
+ * Object containing all the protobuf objects loaded.
+ * Uses protobufjs under the covers.
+ */
 const Schemas = {
   V1: {
     HumidReading: null,
@@ -19,6 +23,9 @@ const Schemas = {
   }
 };
 
+/**
+ * Loads the protobuf files into the Schemas object.
+ */
 function initialize() {
   const V1 = loadProtoFile('v1');
   Schemas.V1.HumidReading = V1.lookupType('HumidReading');
