@@ -5,10 +5,6 @@ function loadProtoFile(file) {
   return protobuf.loadSync(path.join(__dirname, `protos/${file}.proto`));
 }
 
-const Versions = {
-  1: Schemas.V1
-}
-
 /**
  * Object containing all the protobuf objects loaded.
  * Uses protobufjs under the covers.
@@ -26,6 +22,10 @@ const Schemas = {
     State: null
   }
 };
+
+const Versions = {
+  1: Schemas.V1
+}
 
 /**
  * Loads the protobuf files into the Schemas object.
