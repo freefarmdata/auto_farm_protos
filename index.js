@@ -1,8 +1,8 @@
 const protobuf = require('protobufjs');
 const path = require('path');
 
-function loadProtoFile(folderPath, file) {
-  return protobuf.loadSync(path.join(folderPath, `${file}.proto`));
+function loadProtoFile(file) {
+  return protobuf.loadSync(path.join(__dirname, `protos/${file}.proto`));
 }
 
 const Schemas = {
@@ -19,8 +19,8 @@ const Schemas = {
   }
 };
 
-function initialize(folderPath) {
-  const V1 = loadProtoFile(folderPath, 'v1');
+function initialize() {
+  const V1 = loadProtoFile('v1');
   Schemas.V1.HumidReading = V1.lookupType('HumidReading');
   Schemas.V1.SoilReading = V1.lookupType('SoilReading');
   Schemas.V1.TempReading = V1.lookupType('TempReading');
