@@ -5,6 +5,10 @@ function loadProtoFile(file) {
   return protobuf.loadSync(path.join(__dirname, `protos/${file}.proto`));
 }
 
+const Versions = {
+  1: Schemas.V1
+}
+
 /**
  * Object containing all the protobuf objects loaded.
  * Uses protobufjs under the covers.
@@ -39,7 +43,22 @@ function initialize() {
   Schemas.V1.State = V1.lookupType('State');
 }
 
+function readState(version, buffer) {
+  if (Versions[version]) {
+    const schema = Versions[version].State;
+    const error = schema.verify(buffer);
+    if (error) {
+      throw error;
+    }
+
+    return schema.decode(buffer);
+  }
+  throw new Error(`Version ${version} is invalid`);
+}
+
 module.exports = {
   initialize,
+  readState,
+  Versions,
   Schemas
 };
