@@ -46,10 +46,10 @@ function initialize() {
 function readState(version, buffer) {
   if (Versions[version]) {
     const schema = Versions[version].State;
-    const error = schema.verify(buffer);
-    if (error) {
-      throw error;
-    }
+    // const error = schema.verify(buffer);
+    // if (error) {
+    //   throw error;
+    // }
 
     return schema.decode(buffer);
   }
