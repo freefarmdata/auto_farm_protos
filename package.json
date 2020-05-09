@@ -1,0 +1,20 @@
+{
+  "name": "auto_farm_protos",
+  "version": "1.0.0",
+  "description": "Central git repo for all the protobuf files in the system.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freefarmdata/auto_farm_protos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/freefarmdata/auto_farm_protos/issues"
+  },
+  "homepage": "https://github.com/freefarmdata/auto_farm_protos#readme",
+  "dependencies": {
+    "protobufjs": "^6.9.0"
+  }
+}
