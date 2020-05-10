@@ -18,7 +18,7 @@ function mapToInflux(state) {
       piTemp,
       piVolts,
       upTime,
-      time
+      readTime: time
     }
   }
 
@@ -35,7 +35,7 @@ function mapToInflux(state) {
       morningTime,
       nightTime,
       camerasEnabled,
-      time
+      readTime
     }
   }
 
@@ -46,7 +46,7 @@ function mapToInflux(state) {
     },
     fields: {
       reading: currentTemp.temp,
-      time: currentTemp.time
+      readTime: currentTemp.time
     }
   }
 
@@ -57,7 +57,7 @@ function mapToInflux(state) {
     },
     fields: {
       reading: currentHumid.humid,
-      time: currentHumid.time
+      readTime: currentHumid.time
     }
   }
 
@@ -65,14 +65,14 @@ function mapToInflux(state) {
     return {
       measurement: 'soil',
       tags: {
-        id
+        id,
+        pin: soil.pin
       },
       fields: {
         reading: soil.reading,
-        time: soil.time,
+        readTime: soil.time,
         median: soil.median,
         standardDev: soil.standardDev,
-        pin: soil.pin
       }
     }
   });
