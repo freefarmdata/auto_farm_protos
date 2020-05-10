@@ -89,11 +89,3 @@ function mapToInflux(state) {
 module.exports = {
   mapToInflux
 }
-
-influx.writePoints([
-  {
-    measurement: 'response_times',
-    tags: { host: os.hostname() },
-    fields: { duration, path: req.path },
-  }
-])
