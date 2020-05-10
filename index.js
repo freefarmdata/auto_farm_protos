@@ -1,6 +1,8 @@
 const protobuf = require('protobufjs');
 const path = require('path');
 
+const versions = require('./versions');
+
 function loadProtoFile(file) {
   return protobuf.loadSync(path.join(__dirname, `protos/${file}.proto`));
 }
@@ -24,7 +26,10 @@ const Schemas = {
 };
 
 const Versions = {
-  1: Schemas.V1
+  1: {
+    schema: Schemas.V1,
+    mapToInflux: versions.V1.mapToInflux
+  }
 }
 
 /**
@@ -45,13 +50,15 @@ function initialize() {
 
 function readState(version, buffer) {
   if (Versions[version]) {
-    const schema = Versions[version].State;
-    // const error = schema.verify(buffer);
-    // if (error) {
-    //   throw error;
-    // }
-
+    const schema = Versions[version].schema.State;
     return schema.decode(buffer);
+  }
+  throw new Error(`Version ${version} is invalid`);
+}
+
+function mapToInflux(version, state) {
+  if (Versions[version]) {
+    return Versions[version].mapToInflux(state);
   }
   throw new Error(`Version ${version} is invalid`);
 }
@@ -59,6 +66,7 @@ function readState(version, buffer) {
 module.exports = {
   initialize,
   readState,
+  mapToInflux,
   Versions,
   Schemas
 };
