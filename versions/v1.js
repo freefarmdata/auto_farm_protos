@@ -1,7 +1,7 @@
 function mapToInflux(state) {
   const { status, modifiers } = state;
   const { reboot, halt, calibrateSoil, imageInterval, morningTime, nightTime, camerasEnabled } = modifiers;
-  const { id, cameras, halted, debug, soilCalibrating, piStats, currentTemp, currentHumid, currentSoil } = status;
+  const { id, software, cameras, halted, debug, soilCalibrating, piStats, currentTemp, currentHumid, currentSoil } = status;
   const { piTemp, piVolts, upTime, time } = piStats;
 
   const statusMeasurement = {
