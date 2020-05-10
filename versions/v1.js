@@ -66,7 +66,7 @@ function mapToInflux(state) {
       measurement: 'soil',
       tags: {
         id,
-        pin: soil.pin
+        pin: soil.pin.toString()
       },
       fields: {
         reading: soil.reading,
