@@ -35,7 +35,7 @@ function mapToInflux(state) {
       morningTime,
       nightTime,
       camerasEnabled,
-      readTime
+      readTime: time
     }
   }
 
