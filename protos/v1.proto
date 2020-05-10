@@ -1,7 +1,7 @@
 syntax = "proto2";
 
 message Alarm {
-  required uint32 time = 1;
+  required uint64 time = 1;
   required string title = 2;
   required uint32 severity = 3;
   required string text = 4;
@@ -9,7 +9,7 @@ message Alarm {
 
 message SoilReading {
   required uint32 reading = 1;
-  required uint32 time = 2;
+  required uint64 time = 2;
   required uint32 pin = 3;
   optional float median = 4;
   optional float standard_dev = 5;
@@ -17,19 +17,19 @@ message SoilReading {
 
 message TempReading {
   required float temp = 1;
-  required uint32 time = 2;
+  required uint64 time = 2;
 }
 
 message HumidReading {
   required float humid = 1;
-  required uint32 time = 2;
+  required uint64 time = 2;
 }
 
 message PiStatsReading {
   required float pi_temp = 1;
   required float pi_volts = 2;
   required uint32 up_time = 3;
-  required uint32 time = 4;
+  required uint64 time = 4;
 }
 
 message SoilStorage {
