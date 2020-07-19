@@ -28,7 +28,8 @@ const Schemas = {
 const Versions = {
   1: {
     schema: Schemas.V1,
-    mapToInflux: versions.V1.mapToInflux
+    mapToInflux: versions.V1.mapToInflux,
+    readDatabase: versions.V1.readDatabase,
   }
 }
 
@@ -63,10 +64,18 @@ function mapToInflux(version, state) {
   throw new Error(`Version ${version} is invalid`);
 }
 
+async function readDatabase(version, filePath, callback) {
+  if (Versions[version]) {
+    return await Versions[version].readDatabase(filePath, callback);
+  }
+  throw new Error(`Version ${version} is invalid`);
+}
+
 module.exports = {
   initialize,
   readState,
   mapToInflux,
+  readDatabase,
   Versions,
   Schemas
 };

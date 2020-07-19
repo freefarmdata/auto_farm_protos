@@ -48,16 +48,15 @@ message Status {
   required uint32 software = 1;
   required uint32 version = 2;
   required string id = 3;
-  required string url = 4;
-  required uint32 cameras = 5;
-  required bool halted = 6;
-  required bool debug = 7;
-  required bool soil_calibrating = 8;
-  required TempReading current_temp = 9;
-  required HumidReading current_humid = 10;
-  required PiStatsReading pi_stats = 11;
-  repeated SoilReading current_soil = 12;
-  repeated Alarm alarms = 13;
+  required uint32 cameras = 4;
+  required bool halted = 5;
+  required bool debug = 6;
+  required bool soil_calibrating = 7;
+  required TempReading current_temp = 8;
+  required HumidReading current_humid = 9;
+  required PiStatsReading pi_stats = 10;
+  repeated SoilReading current_soil = 11;
+  repeated Alarm alarms = 12;
 }
 message Modifiers {
   required bool reboot = 1;
