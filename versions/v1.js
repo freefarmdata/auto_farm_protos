@@ -4,20 +4,25 @@ const util = require('util');
 const asyncOpen = util.promisify(fs.open);
 const asyncRead = util.promisify(fs.read);
 
-const HEADERS_SIZE = 12;
+const HEADERS_SIZE = 28;
 
 function parseHeaders(buffer) {
   const software = Buffer.from(buffer.slice(0, 4)).readInt32LE();
   const version = Buffer.from(buffer.slice(4, 8)).readInt32LE();
-  const length = Buffer.from(buffer.slice(8, 12)).readInt32LE();
-  return { software, version, length };
+  const id = Buffer.from(buffer.slice(8, 24)).readInt32LE();
+  const length = Buffer.from(buffer.slice(24, 28)).readInt32LE();
+  return { software, version, id, length };
 }
 
 function mapToInflux(state) {
   const { status, modifiers } = state;
   const { reboot, halt, calibrateSoil, imageInterval, morningTime, nightTime, camerasEnabled } = modifiers;
   const { id, software, cameras, halted, debug, soilCalibrating, piStats, currentTemp, currentHumid, currentSoil } = status;
-  const { piTemp, piVolts, upTime, time } = piStats;
+  const { piTemp, piVolts, upTime, time, lastLoopTime } = piStats;
+
+  // ingestTime should be set by auto_farm_pantry as soon as request comes in
+  const now = Math.round(new Date().getTime() / 1000); // seconds
+  let ingestTime = state.ingestTime ? state.ingestTime : now;
 
   const statusMeasurement = {
     measurement: 'status',
@@ -25,6 +30,7 @@ function mapToInflux(state) {
       id
     },
     fields: {
+      ingestTime,
       software,
       cameras,
       halted,
@@ -33,6 +39,7 @@ function mapToInflux(state) {
       piTemp,
       piVolts,
       upTime,
+      lastLoopTime,
       readTime: time
     }
   }
@@ -43,6 +50,7 @@ function mapToInflux(state) {
       id
     },
     fields: {
+      ingestTime,
       reboot,
       halt,
       calibrateSoil,
@@ -60,6 +68,7 @@ function mapToInflux(state) {
       id
     },
     fields: {
+      ingestTime,
       reading: currentTemp.temp,
       readTime: currentTemp.time
     }
@@ -71,6 +80,7 @@ function mapToInflux(state) {
       id
     },
     fields: {
+      ingestTime,
       reading: currentHumid.humid,
       readTime: currentHumid.time
     }
@@ -84,6 +94,7 @@ function mapToInflux(state) {
         pin: soil.pin.toString()
       },
       fields: {
+        ingestTime,
         reading: soil.reading,
         readTime: soil.time,
         median: soil.median,
