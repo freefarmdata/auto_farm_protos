@@ -15,6 +15,6 @@
   },
   "homepage": "https://github.com/freefarmdata/auto_farm_protos#readme",
   "dependencies": {
-    "protobufjs": "^6.9.0"
+    "protobufjs": "^6.11.3"
   }
 }
